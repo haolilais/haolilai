@@ -1,0 +1,289 @@
+{% extends 'app/base.html' %}
+
+{% block css %}
+
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/global.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/channel.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/cart.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/ui.all.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/channel_new.css">
+
+{% endblock %}
+
+{% block title %}
+    <title>购物流程_好利来蛋糕官网__蛋糕3小时急送达__口感不满即可退货</title>
+{% endblock %}
+
+{% block script %}
+    <script>
+        var CONTEXT = "";
+    </script>
+    <script language=javascript src="/static/jquery.min.js"></script>
+    <script language=javascript src="/static/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script language=javascript src="/static/js/My97DatePicker/WdatePicker.js"></script>
+
+    <script language=JavaScript src="/static/js/ScrollPic.js"></script>
+    <script language=JavaScript src="/static/js/soChange.js"></script>
+    <script language=JavaScript src="/static/js/layer/layer.js"></script>
+
+
+    <script type="text/javascript" src="/static/js/shopping_flow.js"></script>
+    <script type="text/javascript" src="/static/js/region_flow.js"></script>
+{% endblock %}
+
+
+
+
+{% block body %}
+    <div class="block box">
+        <div id="ur_here">
+        </div>
+    </div>
+
+
+    <div class="block">
+
+
+{#        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=22oqIhnUll0Inar4Tw7nCO8pX0RdAgmI"></script>#}
+        <script type="text/javascript" src="/static/js/GeoUtils.js"></script>
+
+        <form action="" method="post" name="theForm" id="theForm" onsubmit="return checkOrderForm(this)">
+            <script type="text/javascript">
+                var flow_no_payment = "您必须选定一个支付方式。";
+                var flow_no_shipping = "您必须选定一个配送方式。";
+                //获取默认配送地址
+                $(document).ready(function () {
+                    updateConsignee('0');
+                });
+            </script>
+
+
+            <div class="cg_cc">
+                <div class="h_cc">
+                    <!-- <div class="h_jiezhang">
+                        <p>结账</p>
+                    </div> -->
+                    <div class="login_bt" style="text-align:center; padding-left:0; width:996px; background:#fff;">
+                        <span style="float:left; width:45%; display:inline-block; border-top:1px dashed #d5d5d5; margin-top:14px;"></span>
+                        <span style="width:10%; display:inline-block; color:#909090; font-weight:bold;">结算</span>
+                        <span style="float:right; width:45%; display:inline-block; border-top:1px dashed #d5d5d5; margin-top:14px;"></span>
+                    </div>
+
+
+                    <div class="shouhuo peisong">
+                        <p class="head"><span>配送信息</span></p>
+                        <div class="shr shre" style="margin:10px 0 0;padding:0">
+                            <div class="list" style="margin-left: 25px; height:auto;">
+                                <div class="field">
+                                    <input type="radio" id="ships12" class="shipping" name="shipping" value="12"
+                                           data-fee="￥12.00" is_waim="0" is_kuaid="1" shipping_code="city_express"
+                                           checked="checked" style="margin-top:10px;">&nbsp;<label for="ships12"
+                                                                                                   style="margin-right:25px;">快递派送（次日发货）</label>
+
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $(".shipping").click(function () {
+                                        var shipping = $('input:radio[name="shipping"]:checked').val();
+                                        var shippingCode = $(this).attr('shipping_code');
+
+                                        //更换收货人信息
+                                        updateConsignee(0, shipping);
+
+                                        //获取配送时间
+                                        $.get('yolin.php', {step: 'getBestTime', shipping: shipping}, function (data) {
+                                            $('.bestTimeBox').html(data.content);
+                                        }, 'json');
+
+                                        //获取支付信息
+                                        $.get('yolin.php', {step: 'getPayList', shipping: shipping}, function (data) {
+                                            $('#pay_lists').html(data.content);
+                                        }, 'json');
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="shouhuo">
+                        <hr>&nbsp;&nbsp;<span style="font-size: 15px;">选择收货地址</span>
+                        <hr><br>
+                        <div class="address">
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;详细地址：</span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="shouhuo zhifu" id="zhifuUrl">
+                        <p class="head" style="margin-left: 6px;">
+                            <span>支付方式</span>
+                            <span class="gidet change_p" style="display:none">修改</span>
+                        </p>
+                        <div class="moren">
+                            <p id="zhifufangshi"></p>
+                        </div>
+                        <div class="shr" style=" margin-left: 0px; padding:0px 10px;">
+                            <div class="pay" id="pay_lists" style="margin-left: 20px;">
+                                <div style="margin-top:15px;">
+                                    <label style="margin-right:15px; width:200px; display:inline-block;">
+                                        <input type="radio" id="1" name="payment" value="1"
+                                               onclick="selectPayment(this);changePayment(this);">
+                                        <font id="payment1" class="payment_s">支付宝</font>
+                                    </label>
+
+                                    <label style="margin-right:15px; width:200px; display:inline-block;">
+                                        <input type="radio" id="17" name="payment" value="17"
+                                               onclick="selectPayment(this);changePayment(this);">
+                                        <font id="payment17" class="payment_s">微信-在线支付</font>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="select_pay"></div>
+                        </div>
+                        <!-- <div class="form-btn">
+                            <span class="shrf">保存支付方式</span>
+                        </div> -->
+                    </div>
+                    <script type="text/javascript">
+                        function changePayment(obj) {
+                            return;
+                            if (obj.value == '9') {
+                                $('#bank_pay_desc').show();
+                            } else {
+                                $('#bank_pay_desc').hide();
+                            }
+                        }
+                    </script>
+                    <div class="shouhuo xiangqing">
+                        <p class="head">
+                            <span>订单详情</span>
+                        </p>
+                        <table class="xq" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <th class="ssa">
+                                    <span>名称</span>
+                                </th>
+                                <th class="ssb">
+                                    <span>尺寸</span>
+                                </th>
+                                <th class="ssb">
+                                    <span>积分</span>
+                                </th>
+                                <th class="ssb">
+                                    <span>数量</span>
+                                </th>
+                                <th class="ssf">
+                                    <span>小计</span>
+                                </th>
+                            </tr>
+
+
+
+                            {% for cart in carts %}
+
+                            <tr class="b_line">
+                                <td>
+                                    <dl>
+                                        <dt>
+                                            <a href="detailed.php?id=1144" target="_blank"><IMG
+                                                    src="images/201907/goods_img/1144_G_1562475751584.jpg" width=60
+                                                    align=absMiddle height=60></a>
+                                        </dt>
+                                        <dd style="line-height:60px;">
+                                            <p>{{ cart.name }}</p>
+                                            <!-- <label>MX001144</label> -->
+                                        </dd>
+                                    </dl>
+                                </td>
+                                <td style="font-size: 15px;">{{ cart.arrt }}</td>
+                                <td>{{ cart.pid.pscore }}</td>
+                                <td>{{ cart.num }}</td>
+                                <td style="font-size: 16px;">￥{{ cart.total_price }}</td>
+                            </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                        <script type="text/javascript">
+                            function setSrp(obj, recid) {
+                                $.get('flow.php', {
+                                    step: 'setGoodsNote',
+                                    note: obj.value,
+                                    recid: recid
+                                }, function (data) {
+                                });
+                            }
+
+                            function setMessage(obj) {
+                                $.get('flow.php', {step: 'setMessage', message: obj.value}, function (data) {
+                                });
+                            }
+                        </script>
+                        <div class="h_fy" id="ordermoney">
+                            <div id="ordermoneya">
+{#                                <input name="bean.invoice" type="text">#}
+
+                                <div class="h_fy_right">
+                                    <div id="showmoney" >
+                                        商品金额合计:<span id="totalUserPrice">￥{{ nums }}</span>
+                                        配送费用:<span>{% if nums > 100 %}
+                                        ￥0.00
+                                        {% else %}
+                                        ￥10.00
+                                        {% endif %}</span>
+                                        <label>需付:<b id="paid" class="jg" style="margin-left:0">￥{{ nums }}</b></label>
+                                        <p>
+                                        </p>
+                                    </div>
+
+                                    <textarea name="note" class="bak" type="text" placeholder="备注:(100字以内)"
+                                              maxlength="100" onblur="setMessage(this)"></textarea>
+{#                                    <a href="{% url 'app:order' %}"><input type="submit" value="提交"  class="submit"></a>#}
+{#                                    <span onclick="javascript:submitForm_done();" class="tijiao">确认并提交订单</span>#}
+                                    <div class="submit_order"><a href="{% url 'app:order' %}">提交</a></div>
+                                </div>
+
+                                <script type="text/javascript">
+                                    <!--
+
+                                    function submitForm_done() {
+                                        $(".submit_done").trigger("click");
+                                    }
+
+                                    //-->
+                                </script>
+                            </div>
+
+{#                            积分#}
+                            <div class="h_fy_left">
+                                <div>
+                                    <div>
+                                        <p style="font-size: 15px;  line-height: 25px;" class="hh jifen">
+                                            积　分
+                                            <i style="background-position:4px -84px;margin-left:-5px; margin-top:-4px; margin-right:0"></i>
+                                        </p>
+                                    </div>
+                                    <div class="jifen_div fpneirong" style="font-size: 14px;float: left">
+                                        <!--<p class="line">积分冲抵：使用积分抵消部分总额</p>-->
+                                        <span class="line">可用积分：{{ user.score }}</span>
+                                        <span class="line">产品积分：{{ pscores }}</span>
+{#                                        <span id="mon" style="color:#6DC2DF;">￥0元</span>#}
+{#                                        <a href="javascript:changeIntegral(0)" class="jifen_but">确定</a>#}
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <input type="hidden" name="step" value="done">
+                        </div>
+                    </div>
+
+        </form>
+
+    </div>
+
+{% endblock %}

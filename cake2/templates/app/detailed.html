@@ -1,0 +1,341 @@
+{% extends 'app/base.html' %}
+
+{% block css %}
+
+    <LINK rel=stylesheet type='text/css' href="/static/css/global.css">
+    <LINK rel=stylesheet type='text/css' href="/static/css/ui.all.css">
+    <LINK rel=stylesheet type='text/css' href="/static/css/channel_new.css">
+
+{% endblock %}
+
+
+{% block script %}
+    <SCRIPT language=JavaScript src="/static/js/jquery-1.4.2.min.js"></SCRIPT>
+    <SCRIPT language=JavaScript src="/static/js/jquery.tools.min.js"></SCRIPT>
+    <script language=javascript src="/static/js/My97DatePicker/WdatePicker.js"></script>
+    <SCRIPT language=JavaScript src="/static/js/ScrollPic.js"></SCRIPT>
+    <SCRIPT language=JavaScript src="/static/js/soChange.js"></SCRIPT>
+    <SCRIPT language=JavaScript src="/static/js/utils.js"></SCRIPT>
+    <SCRIPT language=JavaScript src="/static/js/common.js"></SCRIPT>
+    <SCRIPT type='text/javascript' src="/static/js/cloud-zoom.1.0.2.js"></SCRIPT>
+{% endblock %}
+
+
+{% block body %}
+
+    <SCRIPT>
+        var goodsId="1144";
+        function submitProductForm(act, isSearch){
+        document.cartManagerForm.actionType.value=act;
+        //购买商品
+        if(act == "putproductviewcar"){
+            if(isSelected()){
+                if(confirm("确认购买所选商品?") ){
+            }else{
+                return;
+            }
+            }else{
+                alert("请选择商品!");
+                return;
+            }
+        }
+            document.cartManagerForm.submit();
+        }
+    </SCRIPT>
+    <SCRIPT>
+        function ycsdl(){
+            $(".xdl").hide();
+        }
+        function sdcg(){
+            $(".sdcg").hide();
+        }
+    </SCRIPT>
+
+<DIV class='aler'>
+	<DIV class="h_xz bcz">
+		<H3></H3>
+		<P><SPAN></SPAN>收藏商品不存在!</P>
+		<DIV class=h_cart><A href="javascript:bcz()">确定</A> </DIV>
+	</DIV>
+	<DIV class="h_xz xdl">
+		<H3></H3>
+		<P><SPAN></SPAN>登录用户才能收藏商品,请先登陆!</P>
+		<DIV class=h_cart><A href="javascript:ycsdl()">确定</A> </DIV>
+	</DIV>
+	<DIV class="h_xz sdcg">
+		<H3></H3>
+		<P><SPAN></SPAN>收藏商品成功!</P>
+		<DIV class=h_cart><A href="javascript:sdcg()">确定</A> </DIV>
+	</DIV>
+</DIV>
+<DIV class=hll_main_right>
+
+	<!-- <DIV class=h_cakex>
+	<div class="h_xilfenlei">
+	    <P class='h_xlheads'><a href='/'>主页</a>/<a href='/cake.php'>产品系列</a>/<a href='/classify.php?id=26'>和风软点</a>/<span>雪绒芝士</span></P>
+    </div>
+</DIV> -->
+
+<DIV class=h_cakexq>
+
+	<DIV class=h_xqleft>
+		<DIV id=change_2 class=changeBox_a1>
+		    <DIV class='a_bigImg' rel="http://www.holiland.com/images/201907/goods_img/1144_P_1562474189429.png">
+                <DIV class=wrap>
+                    <SPAN class='cloud-zoom-single' rel="adjustX:10, adjustY:-1"
+                        name="http://www.holiland.com/images/201907/goods_img/1144_P_1562474189429.png" ><IMG
+                        src="http://www.holiland.com/images/201907/goods_img/1144_P_1562474189429.png"  rel="http://www.holiland.com/images/201907/goods_img/1144_P_1562474189429.png" mid="http://www.holiland.com/images/201907/goods_img/1144_P_1562474189429.png" big="http://www.holiland.com/images/201907/goods_img/1144_P_1562474189429.png" class="jqzoom"  style="cursor:move" >
+                    </SPAN>
+		        </DIV>
+	        </DIV>
+	        <DIV class='a_bigImg' rel="http://www.holiland.com/images/201907/goods_img/1144_P_1562474190887.jpg">
+                <DIV class=wrap>
+                    <SPAN class='cloud-zoom-single' rel="adjustX:10, adjustY:-1"
+                    name="http://www.holiland.com/images/201907/goods_img/1144_P_1562474190887.jpg" ><IMG
+                    src="http://www.holiland.com/images/201907/goods_img/1144_P_1562474190887.jpg"  rel="http://www.holiland.com/images/201907/goods_img/1144_P_1562474190887.jpg" mid="http://www.holiland.com/images/201907/goods_img/1144_P_1562474190887.jpg" big="http://www.holiland.com/images/201907/goods_img/1144_P_1562474190887.jpg" class="jqzoom"  style="cursor:move" >
+                    </SPAN>
+                </DIV>
+	        </DIV>
+	        <A title=上一个 class=a_last href="javascript:viod();"></A>
+	        <A title=下一个 class=a_next href="javascript:viod();"></A>
+            <DIV class=num>
+                <SPAN class=ad01></SPAN>
+                <SPAN class=ad01></SPAN>
+            </DIV>
+        </DIV>
+        <script type="text/javascript">
+    $(document).ready(function(){
+        //$(".jqzoom").imagezoom();
+        //自动切换的图片调用soChange插件
+        $('#change_2 .a_bigImg').soChange({
+            thumbObj:'#change_2 div.num span',
+            thumbNowClass:'ad01',
+            botPrev:'#change_2 .a_last',//按钮，上一个
+            botNext:'#change_2 .a_next',//按钮，下一个
+            autoChange:true,
+            changeTime:4000
+        });
+});
+</script>
+	</DIV>
+
+		<DIV class=h_xqright>
+			<IMG src="http://www.holiland.com/data/anatomy/201907/1562474189519495842.jpg" style="margin-bottom:10px; height:290px;">
+						<a id=showprice style="float: right; text-align:right; height:auto; margin-top:20px;">点此收藏我哦</a>
+			<SPAN class=name style="float:left; text-align:left; height:42px; margin-top:20px;">
+				<H2>{{ product.title }}&nbsp;&nbsp;&nbsp;￥{{ product.price }}</H2>
+			</SPAN>
+
+{#		<form action="javascript:addToCart(1144)" method="post" name="goodsForm" id="goodsForm" >#}
+        <form action="{% url 'app:detailed' pid %}" method="post" name="goodsForm" id="goodsForm" >
+        {% csrf_token %}
+			<DIV class=h_box>
+				<DL class="h_ss h_ss_re goodsattr">
+					<DT>规格</DT>
+					<DD class="attrs0">
+						<SPAN >
+							<B class="selected0">
+{#							请选择#}
+                                <select name="size" id="size" class="select_attr" style="width: 180px;height: 25px;margin-left: -10px;">
+                                    <option value="0" selected="selected" >6寸</option>
+                                    <option value="1" selected="selected" >12寸</option>
+    {#						        <option value="2" selected="selected" ></option>#}
+                                </select>
+							</B><I></I>
+						</SPAN>
+						<DIV class="h_size h_size2">
+{#                            <P class="select_attr" data-id="0" attr-id="2769" data-attr_id="2769|2770" select-id="1" >#}
+{#								<LABEL>6枚入-玫瑰蜜桃味</LABEL>#}
+{#								<FONT>￥48.00</FONT>#}
+{#							</P>#}
+{#                            <P class="select_attr" data-id="0" attr-id="2769" data-attr_id="2769|2771" select-id="1" >#}
+{#								<LABEL>6枚入-青梅味</LABEL>#}
+{#								<FONT>￥48.00</FONT>#}
+{#							</P>#}
+
+					    </DIV>
+					</DD>
+				</DL>
+				<input type="hidden" name="spec_list[]" class="spec1" value="" autocomplete="off" />
+
+                <DIV class="h_ss h_goumai" style="background:#87d0e3; " onclick="alert('修改成功')">
+{#					<A title=加入购物车 href="javascript:addCart(1144,0);" style="color:#fff; padding-left:0px; text-align:center;">#}
+{#                    <A title=加入购物车 href="{% url 'app:detailed' pid %}?c=1" style="color:#fff; padding-left:0px; text-align:center;">#}
+{#                        <input type="button" value="加入购物车" style="margin-top:15px; background-color: #87D0E3;">#}
+{#                    加入购物车</A>#}
+                    <button type="submit" style="margin-left:-20px; background-color: #87D0E3;width:235px;height: 50px;color: white;font-size: 14px;">加入购物车 </button>
+
+                </DIV>
+
+				<DL class=h_ss>
+					<DT>数量 </DT>
+					<DD>
+						<DIV class=h_shuxz>
+							<A href="javascript:;" onclick="chageNumber(0);">-</A>
+							<INPUT onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'') " onblur="chageNumber(2);" id="number" value="1" name='number' autocomplete="off">
+							<A href="javascript:;" onclick="chageNumber(1);">+</A>
+						</DIV>
+					</DD>
+				</DL>
+				<DIV class="h_ss h_goumai">
+					<A href="javascript:addToCart(1144,0,1);" style="padding-left:0px; text-align:center;">立即购买</A>
+				</DIV>
+            </DIV>
+{#		</DIV>#}
+
+
+{#         加入购物车弹框#}
+            {% if product.iscart == 1%}
+                <DIV class="h_add h_add1" style="z-index:999999999999">
+                <H3></H3>
+                <P><SPAN></SPAN>添加成功</P>
+                    <DIV class=h_cart><A
+                    href="javascript:window.location.href ='http://www.holiland.com/flow.php'">去购物车结算</A> <A class=goon href="/classify/26.html">再逛逛</A> </DIV>
+                </DIV>
+            {% endif %}
+{#        收藏    #}
+
+            <DIV class="h_add h_collect">
+                <H3></H3>
+                <P><SPAN></SPAN>您已经收藏此商品了!</P>
+                <DIV class=h_cart><A href="javascript:shoucangSuccess()">确定</A> </DIV>
+            </DIV>
+{#        </DIV>#}
+    </form>
+
+    <style type="text/css">
+        .detail_xx img{width:996px;margin-left:-30px;}
+        .detail_xx video{width:996px; margin-left:-30px;}
+    </style>
+
+    <div class="clear" style="clear:both;"></div>
+    <DIV class='detail_xx' style="margin-top:12px;">
+
+{#        详情#}
+{#    <p><img src="/images/upload/images/20190707/1562502923445155.jpg" style="" title="1562502923445155.jpg"/></p><p><img src="/images/upload/images/20190707/1562502926652644.jpg" style="" title="1562502926652644.jpg"/></p><p><img src="/images/upload/images/20190707/1562502928538776.jpg" style="" title="1562502928538776.jpg"/></p><p><img src="/images/upload/images/20190707/1562502934220183.jpg" style="" title="1562502934220183.jpg"/></p><p><img src="/images/upload/images/20190707/1562502937330155.jpg" style="" title="1562502937330155.jpg"/></p><p><img src="/images/upload/images/20190707/1562502940917600.jpg" style="" title="1562502940917600.jpg"/></p><p><img src="/images/upload/images/20190707/1562502945255068.jpg" style="" title="1562502945255068.jpg"/></p><p><img src="/images/upload/images/20190707/1562502949913996.jpg" style="" title="1562502949913996.jpg"/></p><p><br/></p></DIV>#}
+
+</DIV>
+<SCRIPT>
+function shoucangSuccess(){
+	$(".h_collect").hide();
+}
+function checkNumber(totalPs){
+/*if(document.getElementsByName('number')[0].value==0){
+alert("购买数量至少为1!");
+document.getElementsByName('number')[0].value=1;
+document.getElementsByName('number')[0].focus();
+return false;
+}
+if(parseInt(document.getElementsByName('number')[0].value)> parseInt(totalPs)){
+alert("您最多可以购买" + totalPs + "件");
+document.getElementsByName('number')[0].value = 1 ;
+document.getElementsByName('number')[0].focus();
+return false;
+}*/
+return true;
+}
+</SCRIPT>
+<SCRIPT>
+var clickmessage="禁止操作"
+function disableclick(e) {
+if (document.all) {
+	if (event.button==2||event.button==3) {
+		if (event.srcElement.tagName=="IMG"){
+			//alert(clickmessage);
+			return false;
+		}
+	}
+}
+	if (document.layers) {
+		if (e.which == 3) {
+			//alert(clickmessage);
+			return false;
+		}
+	}
+}
+function associateimages(){
+	for(i=0;i<document.images.length;i++)
+		document.images[i].onmousedown=disableclick;
+}
+if (document.all)
+	document.onmousedown=disableclick
+else if (document.layers)
+	associateimages()
+</SCRIPT>
+<SCRIPT>
+//蛋糕尺寸的弹出框
+$(document).ready(function(){
+	//载入价格
+	changePrice();
+	$(".h_cakexq .h_xqright .h_box span").hover(function(){
+		$(this).next(".h_cakexq .h_xqright .h_box .h_size").show();
+	}, function(){
+		$(this).next(".h_cakexq .h_xqright .h_box .h_size").hide();
+	});
+	$('.h_cakexq .h_xqright .h_box .h_size').hover(function(){
+		$(this).show();
+	}, function(){
+		$(this).hide();
+	})
+	/*$(".h_cakexq .h_xqright .h_box span").click(function(){
+		$(this).next(".h_cakexq .h_xqright .h_box .h_size").slideDown().toggle();
+
+	});*/
+	$(".select_attr").click(function (){
+		var str=$(this).find("LABEL").text();
+		var attrid=$(this).attr("data-id");
+		var attr_id=$(this).attr("data-attr_id");
+		var thisid=$(this).attr("attr-id");
+		var select=$(this).attr("select-id");
+		$(".spec"+select).val(attr_id);//thisid
+		$(".selected"+attrid).text(str);
+		changePrice();
+		$(".h_size1").hide();
+		$.post("/detailed.php",{act:'attr',id:thisid},function (data){
+			if(data.status == 1){
+				if ($('input[name="spec_can"]').val() == ''){
+					$('input[name="spec_can"]').val('2人份');
+				}
+				$('.iscanstatus').show();
+				$(".canju").html(data.data);
+			}else if (data.status == 2){
+				$('.iscanstatus').hide();
+			}
+		},'json');
+	});
+
+	$(".can").live("click",function (){
+		var data=$(this).attr('data-val');
+		$("input[name=spec_can]").val(data);
+		$(".selected_can").text(data);
+		$(".canju").hide();
+	})
+	//弹出框 点击关闭叉 隐藏
+	$(".h_add h3,.goon").click(function(){
+		$(".h_collect").hide();
+		$(".h_add").hide();
+	});
+		$(".h_size2 p").click(function(){
+		$(".h_size2").hide();
+	});
+});
+function chageNumber(state){
+	var number = document.getElementById('number');
+	if(state == 1){
+		numbers = parseInt(number.value) + 1;
+	}else if(state == 2){
+		numbers = !isNaN(number.value) ? parseInt(number.value) : 1;
+	}else{
+		numbers = parseInt(number.value) - 1;
+	}
+	number.value = numbers < 1 ? 1 : numbers;
+	changePrice();
+}
+</SCRIPT>
+<DIV></DIV>
+<SCRIPT>
+//winloadapplist();
+</SCRIPT>
+    <script language=javascript src="/static/js/jquery.SuperSlide.2.1.1.js"></script>
+
+{% endblock %}

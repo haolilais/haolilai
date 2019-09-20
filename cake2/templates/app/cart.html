@@ -1,0 +1,806 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+    <title>购物流程_好利来蛋糕官网__蛋糕3小时急送达__口感不满即可退货</title>
+{% endblock %}
+
+{% block css %}
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/global.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/channel.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/cart.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/ui.all.css">
+    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/channel_new.css">
+{% endblock %}
+
+<script>
+    var CONTEXT = "";
+</script>
+
+
+{% block script %}
+    <script language=javascript src="/static/jquery.min.js"></script>
+    <script language=javascript src="/static/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script language=javascript src="/static/js/My97DatePicker/WdatePicker.js"></script>
+
+    <script language=JavaScript src="/static/js/ScrollPic.js"></script>
+    <script language=JavaScript src="/static/js/soChange.js"></script>
+    <script language=JavaScript src="/static/js/layer/layer.js"></script>
+
+
+    <script type="text/javascript" src="/static/js/shopping_flow.js"></script>
+    <script type="text/javascript" src="/static/js/region_flow.js"></script>
+
+{% endblock %}
+
+
+
+
+
+{% block body %}
+
+
+    <script type="text/javascript">
+        var area_def = "0";
+
+        function selectmap(comId, re_id) {
+            if (re_id === '') {
+                layer.alert('请选择城市。')
+            }
+            //var str=document.getElementById("area_"+re_id).innerHTML;
+            var str = $('.newChangeCity').find('font').html();
+            if (comId == 1) {
+                document.getElementById("area_self").innerHTML = "<i></i>" + str;
+                //document.cookie= "AREA_ID=" +re_id;//城市id
+                //document.cookie= "AREA_def=" +0;//是否是默认城市
+                //document.mapForm.comId.value = re_id;
+                //document.mapForm.submit();
+                $.get('/index.php', {act: 'setCity', 're_id': re_id, 'area_def': 0}, function () {
+                    location.reload();
+                });
+            } else {
+                $("#show").toggle();
+                $('.h_dzxz').toggle();
+                $('#masterdiv').toggle();
+            }
+        }
+    </script>
+    <div id="masterdiv"
+         style="display:none; width:100%; height:100%; position:absolute; background:#000; z-index:1000000; opacity:0.4"></div>
+
+    <script>
+        $(document).ready(function () {
+            var webheight = document.body.scrollHeight;
+            $('#masterdiv').css('height', webheight);
+            if (area_def == 1) {
+                $(".h_dizhi .h_dzxz").show();
+                $('#masterdiv').show();
+            }
+            $(".hll_nav li").mouseover(function () {
+                $(this).addClass('li_hover');
+            });
+            $(".hll_nav li.sy_nav").mouseover(function () {
+                $(this).addClass('sy_hover');
+            });
+            $(".hll_nav li").mouseout(function () {
+                $(this).removeClass('li_hover');
+            });
+            $(".hll_nav li.sy_nav").mouseout(function () {
+                $(this).removeClass('sy_hover');
+            });
+            $(".dz_xz span").click(function () {
+                $(".h_dizhi .h_dzxz").show();
+                $('#masterdiv').show();
+            });
+            $(" .h_dzhead span,.h_dizhi .h_zdclose span").click(function () {
+                $(".h_dizhi .h_dzxz").hide();
+                $('#masterdiv').hide();
+            });
+            $(".h_rmdz a,.h_dzll .h_dzlist a").click(function () {
+                $(".h_dizhi .h_dzxz").hide();
+                $('#masterdiv').hide();
+            });
+
+            $('.dz_lo').click(function () {
+                $(".h_dizhi .h_dzxz").show();
+                $('#masterdiv').show();
+            });
+
+            var $liArr = $(".h_dizhi .h_dzxz .h_dzcontent .h_dzlist a");
+            $liArr.mouseover(function () {
+                $liArr.removeClass("dz_active");
+                $(this).addClass("dz_active");
+            });
+
+            //城市选择的跳转
+            $(".h_hadd .h_cart a.queding").click(function () {
+                $(".h_dizhi .h_dzxz").hide();
+                $(".h_hadd").hide();
+                $('#masterdiv').show();
+            })
+            $(".h_hadd .h_cart a.quxiao,.h_hadd h3").click(function () {
+                $(".h_hadd").hide();
+            })
+
+            $("img").removeAttr('title');
+            $("a").removeAttr('title');
+
+            $('.searchCity').click(function () {
+                var cityKey = $('input[name="areaName"]').val();
+                if (cityKey.length == 0 || cityKey == '输入城市名回车') {
+                    alert('请输入城市关键词');
+                    return false;
+                }
+
+                $.get('/index.php', {act: 'searchCity', 'areaName': cityKey}, function (data) {
+                    if (data == 'fail') {
+                        alert('没有开启该城市');
+                    }
+                    location.reload();
+                });
+                return false;
+            });
+
+            $('.navmenu').hover(function () {
+                $(this).find('.sub_nav').show();
+            }, function () {
+                $('.sub_nav').hide();
+            });
+
+
+            /*$('.newChangeCity').hover(function(){
+                $(this).find('.newProvince').show();
+            }, function(){
+                $(this).find('.newProvince').hide();
+            });
+
+            $('.cityshover').hover(function(){
+                $(this).find('ul').show();
+            }, function(){
+                $(this).find('ul').hide();
+            });*/
+
+            var cleartime1 = cleartime2 = null;
+            $('.newChangeCity').hover(function () {
+                $(this).find('.newProvince').show();
+                if (cleartime) {
+                    clearTimeout(cleartime);
+                }
+            }, function () {
+                var $self = $(this);
+                cleartime = setTimeout(function () {
+                    $self.find('.newProvince').hide();
+                }, 700);
+            });
+
+            $('.cityshover').hover(function () {
+                $('.newCity').hide();
+                $('.cityshover').removeClass('active');
+                if (cleartime2) {
+                    clearTimeout(cleartime2);
+                }
+                if (cleartime1) {
+                    clearTimeout(cleartime1);
+                }
+                $(this).addClass('active');
+                $(this).find('ul').show();
+            }, function () {
+                $(this).removeClass('active');
+                $(this).find('ul').hide();
+            });
+
+            $('.newCity').hover(function () {
+                if (cleartime2) {
+                    clearTimeout(cleartime2);
+                }
+            }, function () {
+                var $self = $(this);
+                cleartime2 = setTimeout(function () {
+                    $self.hide();
+                    $self.parent().removeClass('active');
+                    $('.newProvince').hide();
+                }, 700);
+                return false;
+            });
+
+            $('.changeCity').click(function () {
+                $('.newChangeCity').find('font').html($(this).text());
+                $('.newChangeCity').attr('cityid', $(this).attr('cityid'));
+                $('.newChangeCity').attr('network', $(this).attr('network'));
+                $('.newProvince').hide();
+                $('.cityshover').find('ul').hide();
+            });
+
+            $('.sureChangeCity').click(function () {
+                var network = $('.newChangeCity').attr('network');
+                var cityid = $('.newChangeCity').attr('cityid');
+
+                selectmap(network, cityid);
+                return false;
+            });
+        });
+    </script>
+    <div class="block box">
+        <div id="ur_here">
+        </div>
+    </div>
+
+
+    <div class="block">
+        <script src="/static/js/common.js"></script>
+
+
+        <script type="text/javascript" src="/static/js/showdiv.js"></script>
+        <script type="text/javascript">
+            var user_name_empty = "请输入您的用户名！";
+            var email_address_empty = "请输入您的电子邮件地址！";
+            var email_address_error = "您输入的电子邮件地址格式不正确！";
+            var new_password_empty = "请输入您的新密码！";
+            var confirm_password_empty = "请输入您的确认密码！";
+            var both_password_error = "您两次输入的密码不一致！";
+            var show_div_text = "请点击更新购物车按钮";
+            var show_div_exit = "关闭";
+        </script>
+        <div class="login_bt" style="text-align:center; padding-left:0; width:996px; background:#fff;">
+            <span style="float:left; width:45%; display:inline-block; border-top:1px dashed #d5d5d5; margin-top:14px;"></span>
+            <span style="width:10%; display:inline-block; color:#909090; font-weight:bold;">购物车</span>
+            <span style="float:right; width:45%; display:inline-block; border-top:1px dashed #d5d5d5; margin-top:14px;"></span>
+        </div>
+        <div class="gouwuche">
+            <form id="formCart" name="formCart" method="post" action="flow.php">
+                <table class=xq cellSpacing=0 cellPadding=0>
+                    <tr>
+                        <th class='sa'><SPAN style="text-align:left; padding-left:98px;">商品名称</SPAN></th>
+                        <th class='sb'><SPAN>属性</SPAN></th>
+                        <th class='sc'><SPAN>积分</SPAN></th>
+                        <th class='sd'><SPAN style="width:90px">单价</SPAN></th>
+                        <th class='se'><SPAN style="width:130px">购买数量</SPAN></th>
+                        <th class='se'><SPAN style="width:90px">小计</SPAN></th>
+                        <th class='sf' align="center"><SPAN style="width:85px">操作</SPAN></th>
+                    </tr>
+                    {#                {% for product in products %}#}
+                    {% for cart in carts %}
+                        <tr class="b_line">
+                            <td bgcolor="#ffffff" align="center">
+                                <dl style="margin-left:-10px;">
+                                    <dd><input type="checkbox" style="margin-top:100%" value="1564954" name="ids" checked="checked"></dd>
+                                    <dt><a href="detailed.php?id=1144">
+                                        <img src="images/201907/thumb_img/1144_thumb_G_1562475751449.jpg" width=60
+                                             align='absMiddle' height=60></a>&nbsp;&nbsp;
+                                    </dt>
+                                    <dd style="line-height:60px;">
+                                        <p>
+{#                                            <a href="#">{{ cart.name }}</a>#}
+                                            <a href="{% url 'app:detailed' cart.pid.pid %}">{{ cart.name }}</a>
+                                        </p>
+                                        <!-- <label style="width:auto;"></label>
+                                        <label style="width:auto;">编号 MX001144</label> -->
+                                    </dd>
+                                </dl>
+                            </td>
+                            <td style="padding-left:20px;">{{ cart.arrt }}</td>
+                            <td style="padding-left:20px;" bgcolor="#ffffff">{{ cart.pid.pscore }}</td>
+                            <td style="padding-left:20px;" bgcolor="#ffffff">￥{{ cart.unit_price }}<br/></td>
+                            <td style="padding-left:20px;" bgcolor="#ffffff">
+                                <DIV style="TEXT-ALIGN: center; MARGIN-LEFT: 0px">
+                                    <A class='jian' href="javascript:cart_add_num('1564954',-1)">-</A>
+                                    {#                            <INPUT id='goods_number_1564954' class='bg nums' maxLength='4' size='3' value="3"#}
+                                    {#                                   name="goods_number[1564954]" autocomplete="off" style="    margin-left: 3px;">#}
+                                    <INPUT id='goods_number_1564954' class='bg nums' maxLength='4' size='3'
+                                           value="{{ cart.num }}"
+                                           name="goods_number[1564954]" autocomplete="off"
+                                           style="    margin-left: 3px;">
+                                    <A class='jian' style="TEXT-DECORATION: none"
+                                       href="javascript:cart_add_num('1564954',1)">+</A>
+                                </DIV>
+                            </td>
+                            <td styl e="padding-left:20px;" bgcolor="#ffffff">￥{{ cart.total_price }}</td>
+                            <td style="padding-left:20px;" bgcolor="#ffffff">
+                                {#                        <a onclick="javascript:return del_flow(1564954);" class="f6 openmsg" href="javascript:;"#}
+                                {#                           data-id="1564954" name="delete" >删除</a><br>#}
+                                <a href="{% url 'app:cart' %}?d={{ cart.pid.pid }}" name="delete">删除</a><br>
+                                {#                        <a href="flow.php?step=drop_to_collect&amp;id=1564954" class="f6 opAjax" data-msg="确定放入收藏夹？">放入收藏夹</a>#}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd"
+                       style="display:none">
+                    <tr>
+                        <td bgcolor="#ffffff">
+                            购物金额小计 ￥144.00，比市场价 ￥144.00 节省了 ￥0.00 (0%)
+                        </td>
+                        <td align="right" bgcolor="#ffffff">
+                            <input type="button" value="清空购物车" class="bnt_blue_1"
+                                   onclick="location.href='flow.php?step=clear'"/>
+                            <input name="submit" type="submit" class="bnt_blue_1" value="更新购物车"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <DIV class=jixu>
+                    <P class=head><LABEL>可选好利来专属附加产品<I></I></LABEL>
+                        <!-- <font style="color:red;float:right; margin-right:10px;">满200五环内 免运费 --> <a
+                                href="http://www.holiland.com/cake.php">继续购物</a><!-- </font> --></P>
+                </DIV>
+                <DIV class="gouwuche gouwuche_pro">
+                    <TABLE class=xq cellSpacing=0 cellPadding=0 style="width:996px;">
+                        <TBODY>
+                        <TR>
+                            <TH><SPAN style="padding-left:98px; text-align:left; width:260px">商品信息</SPAN></TH>
+                            <!-- <TH><SPAN>商品编号</SPAN></TH> -->
+                            <TH><SPAN>单价</SPAN></TH>
+                            <TH><SPAN>操作</SPAN></TH>
+                        </TR>
+                        </TBODY>
+                    </TABLE>
+                </DIV>
+                <div class="jixu dd">
+                    <p class='xu' style="width:740px">
+                        <a style="float:left;cursor:pointer;" class="a_check_all"><input type="checkbox"
+                                                                                         name="ckeck_all"
+                                                                                         style="margin-right:10px;display:none">全选</a>&nbsp;&nbsp;
+                        <a href="javascript:;" style="float:left;margin-left:15px;" class="del_ids">×删除选中商品</a>
+                    </p>
+                    <span>总计：￥{{ nums }}</span>
+                    <div id='submitid'><a class='next' href="{% url 'app:jiesuan' %}">下一步</a></div>
+                </div>
+                <input type="hidden" name="step" value="update_cart"/>
+                {#            {% endfor %}#}
+            </form>
+        </div>
+
+
+        <div class="gouwuche" style="overflow: hidden; margin-bottom:25px;">
+        </div>
+
+
+        <script language=javascript src="/static/js/jquery.SuperSlide.2.1.1.js"></script>
+        <div class='sorad_list' style="overflow: hidden;">
+            <h4>更多精彩</h4>
+            <div id='aebiz_center02'>
+                <ul>
+                </ul>
+            </div>
+            <div id='hll_right01' class='rightsor'></div>
+        </div>
+        <script type='text/javascript'>
+            //商品展示的自动播放
+            jQuery("#aebiz_center02").slide({
+                mainCell: "ul",
+                prevCell: ".prev-1",
+                nextCell: ".next-1",
+                autoPage: true,
+                effect: "left",
+                autoPlay: true,
+                vis: 3
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                /*$('.goodsFittings').click(function(){
+                    $('.goodsFittingBox').hide();
+                    $(this).find('ul').show();
+                    $(this).find('i').css("background-image","url(/statics/images/up_icon.png)");
+                    return false;
+                });*/
+                $('.goodsFittings').hover(function () {
+                    $(this).next('.popup').show();
+                    $(this).find('span').css("background-image", "url(/static/images/up_icon.png)");
+                }, function () {
+                    $(this).next('.popup').hide();
+                    $(this).find('span').css("background-image", "url(/static/images/down_icon.png)");
+                });
+                $('.popup').hover(function () {
+                    $(this).show();
+                    $(this).prev().find('span').css("background-image", "url(/static/images/up_icon.png)");
+                }, function () {
+                    $(this).hide();
+                    $(this).prev().find('span').css("background-image", "url(/static/images/down_icon.png)");
+                });
+                $('.canelFitting').click(function () {
+                    $('.popup').hide();
+                    $('#jiant' + $(this).attr('rec_id')).css("background-image", "url(/statics/images/down_icon.png)");
+                    return false;
+                });
+
+                $(document).bind('click', function (e) {
+                    var target = $(e.target);
+                    if (target.closest(".goodsFittings").length == 0) {
+                        $(".goodsFittingBox").hide();
+                        $('.goodsFittings').each(function () {
+                            $(this).find('i').css("background-image", "url(/static/images/down_icon.png)");
+                        });
+                    }
+                });
+            });
+        </script>
+
+        <script type="text/javascript" charset="utf-8">
+            function collect_to_flow(goodsId) {
+                var goods = new Object();
+                var spec_arr = new Array();
+                var fittings_arr = new Array();
+                var number = 1;
+                goods.spec = spec_arr;
+                goods.goods_id = goodsId;
+                goods.number = number;
+                goods.parent = 0;
+                Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), collect_to_flow_response, 'POST', 'JSON');
+            }
+
+            function collect_to_flow_response(result) {
+                if (result.error > 0) {
+                    // 如果需要缺货登记，跳转
+                    if (result.error == 2) {
+                        if (confirm(result.message)) {
+                            location.href = 'user.php?act=add_booking&id=' + result.goods_id;
+                        }
+                    } else if (result.error == 6) {
+                        openSpeDiv(result.message, result.goods_id);
+                    } else {
+                        layer.msg(result.message);
+                    }
+                } else {
+                    location.href = 'flow.php';
+                }
+            }
+        </script>
+
+
+    </div>
+
+
+    <script type="text/javascript" src="/static/js/jia.js" charset="utf-8"></script>
+    <script>
+        $(document).ready(function () {
+            //附加产品
+            $('.head label').click(function () {
+                if ($(this).hasClass('up')) {
+                    $(this).removeClass('up');
+                } else {
+                    $(this).addClass('up');
+                }
+            });
+
+            $('.head label').click(function () {
+                if ($(this).hasClass('up')) {
+                    $('.gouwuche_pro').slideDown();
+                }
+                else {
+                    $('.gouwuche_pro').slideUp();
+                }
+            });
+
+            //微信关注
+            $(".h_footer .h_footerright .h_weixin").hover(function () {
+                $(".h_fenxiang").slideDown();
+            }, function () {
+                $(".h_fenxiang").slideUp();
+            });
+
+            //帮助中心的弹出框
+            $(".h_footerhelp p").click(function () {
+                $(".h_footmenu").slideToggle();
+                if ($(this).hasClass('up')) {
+                    $(this).removeClass('up');
+                }
+                else {
+                    $(this).addClass('up');
+                }
+            });
+
+            $('.fudai p').click(function () {
+                if ($(this).hasClass('up')) {
+                    $('.h_footmenu').slideDown();
+                } else {
+                    $('.h_footmenu').slideUp();
+                }
+            });
+        });
+    </script>
+    <div style="display:none;">
+        <script type="text/javascript">
+            var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fff2b8b9e6f62c97fe72b97c395421e26' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+    </div>
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?84db765dc57dae49f858f0eb00f10c86";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <!-- <script language="JavaScript" src="http://www.holiland.com/statics/js/floatcard.js"></script> -->
+    <!-- <script src="http://www.holiland.com/statics/js/all_20100501.js"></script> -->
+    <script language="javascript" src="http://floatedu.tq.cn/floatcard?adminid=9654958&sort=0"></script>
+    <script id="TQGetrequestUser_JS"></script>
+    <script id="TQGetIsNewMsg_JS"></script>
+    <!-- <script src="http://www.holiland.com/statics/js/as.js"></script> -->
+    <object id="tq_as" name="tq_as" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" height="1" width="1">
+        <param name="movie" value="http://sysimages.edu.tq.cn/js/vip/shareObject.swf">
+        <param name="allowScriptAccess" value="always">
+        <object id="tq_as2" name="tq_as2" type="application/x-shockwave-flash"
+                data="http://www.holiland.com/statics/shareObject.swf" height="1" width="1">
+            <param name="allowScriptAccess" value="always">
+        </object>
+    </object>
+    </body>
+    <script type="text/javascript">
+        //$("input[name=ids]").removeAttr("checked");
+        $('.youhui').toggle(
+            function () {
+                $(this).addClass("r_checked2");
+                $('#showyouhui').show();
+            },
+            function () {
+                $(this).removeClass("r_checked2");
+                $('#showyouhui').hide();
+            }
+        );
+
+        $("#hh").click(function () {
+            if ($("#fpneirong").is(":hidden")) {
+                $("#fpneirong").show();
+                $(this).addClass("r_checked2");
+            } else {
+                $("#fpneirong").hide();
+                $(this).removeClass("r_checked2");
+            }
+        });
+
+        var process_request = "正在处理您的请求...";
+        var username_empty = "- 用户名不能为空。";
+        var username_shorter = "- 用户名长度不能少于 3 个字符。";
+        var username_invalid = "- 用户名只能是由字母数字以及下划线组成。";
+        var password_empty = "- 登录密码不能为空。";
+        var password_shorter = "- 登录密码不能少于 6 个字符。";
+        var confirm_password_invalid = "- 两次输入密码不一致";
+        var email_empty = "- Email 为空";
+        var email_invalid = "- Email 不是合法的地址";
+        var agreement = "- 您没有接受协议";
+        var msn_invalid = "- msn地址不是一个有效的邮件地址";
+        var qq_invalid = "- QQ号码不是一个有效的号码";
+        var home_phone_invalid = "- 家庭电话不是一个有效号码";
+        var office_phone_invalid = "- 办公电话不是一个有效号码";
+        var mobile_phone_invalid = "- 手机号码不是一个有效号码";
+        var msg_un_blank = "* 用户名不能为空";
+        var msg_un_length = "* 用户名最长不得超过7个汉字";
+        var msg_un_format = "* 用户名含有非法字符";
+        var msg_un_registered = "* 用户名已经存在,请重新输入";
+        var msg_can_rg = "* 可以注册";
+        var msg_email_blank = "* 邮件地址不能为空";
+        var msg_email_registered = "* 邮箱已存在,请重新输入";
+        var msg_email_format = "* 邮件地址不合法";
+        var msg_blank = "不能为空";
+        var no_select_question = "- 您没有完成密码提示问题的操作";
+        var passwd_balnk = "- 密码中不能包含空格";
+        var username_exist = "用户名 %s 已经存在";
+        var compare_no_goods = "您没有选定任何需要比较的商品或者比较的商品数少于 2 个。";
+        var btn_buy = "购买";
+        var is_cancel = "取消";
+        var select_spe = "请选择商品属性";
+
+        /*]
+            发票操作
+        */
+
+        $(".fapiaos").click(function () {
+            if ($(this).is(":checked")) {
+                $("#ECS_INVTYPE").removeAttr("disabled");
+                $(".payee").removeAttr("disabled");
+                $("#invoiceTitle").removeAttr("disabled");
+            } else {
+                $("#ECS_INVTYPE").attr({"disabled": "disabled"});
+                $("#invoiceTitle").attr({"disabled": "disabled"});
+                $(".payee").attr({"disabled": "disabled"});
+            }
+        });
+
+        $(".fpbaocun").click(function () {
+            var fapiao = $(".fapiaos").is(":checked") ? 1 : 0;
+            var payee = $("input[name=inv_payee]:checked").val();
+            var type = $("#ECS_INVTYPE").val();
+            var text = $("#invoiceTitle").val();
+            $.post("flow.php", {fapiao: fapiao, payee: payee, type: type, text: text, step: "fapiao"}, function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, {icon: 1});
+                    return;
+                }
+            }, 'json')
+        });
+
+
+        function che(obj, type, element) {
+            var shipping_id = $('input:radio[name="shipping"]:checked').val();
+            //百度外卖快递方式
+            if ($('input:radio[name="shipping"]:checked').attr('is_waim') == 1) {
+                $.post("yolin.php", {region: $(obj).val(), step: "getZone"}, function (data) {
+                    $('#zone_coord').val(data);
+                    $('.address_info').val('');
+                });
+                return;
+            }
+
+            //第三方快递
+            if ($('input:radio[name="shipping"]:checked').attr('is_kuaid') == 1) {
+                $.post("yolin.php", {
+                    step: 'getRegion',
+                    region: $(obj).val(),
+                    type: type,
+                    kuaidi: 1
+                }, function (result) {
+                    var sel = document.getElementById(element);
+                    sel.length = 1;
+                    sel.selectedIndex = 0;
+                    sel.style.display = (result.regions.length == 0 && !region.isAdmin) ? "none" : '';
+                    if (document.all) {
+                        sel.fireEvent("onchange");
+                    } else {
+                        var evt = document.createEvent("HTMLEvents");
+                        evt.initEvent('change', true, true);
+                        sel.dispatchEvent(evt);
+                    }
+
+                    if (result.regions) {
+                        for (i = 0; i < result.regions.length; i++) {
+                            var opt = document.createElement("OPTION");
+                            opt.value = result.regions[i].region_id;
+                            opt.text = result.regions[i].region_name;
+                            sel.options.add(opt);
+                        }
+                    }
+                }, 'json');
+                return;
+            }
+
+            if (shipping_id != 8) {
+                region.changed(obj, type, element);
+                return;
+            }
+
+            $.post("flow.php", {county_id: $(obj).val(), step: "city"}, function (data) {
+                if (data.status == 1) {
+                    $("#mendian").html(data.data);
+                    $("#mendian").show();
+                }
+            }, 'json');
+        }
+
+        /*
+        更新购物车
+        */
+        function cart_add_num(re_id, type) {
+            var num = $("#goods_number_" + re_id).val();
+            if (type == 1) {
+                num = parseInt(num) + 1;
+            } else if (type = -1) {
+                num = parseInt(num) - 1;
+            }
+            num = num <= 0 ? 1 : num;
+            $("#goods_number_" + re_id).val(num);
+            $(".bnt_blue_1").trigger("click");
+            //document.getElementById("formCart").submit();
+        }
+
+        $(".r_checked2").click(function () {
+
+            if ($(".youhui").is(":hidden") == false) {
+                $(".youhui").hide();
+            } else {
+                $(".youhui").show();
+            }
+        });
+
+        //修改收货时间
+        $(".gidet_date").click(function () {
+            $(".peisongdates").html("");
+            $(this).hide();
+            $('.date_but').show();
+            $('.btn-sus').show();
+            $(".list").show();
+        });
+
+        //配送信息
+        $(".openmsg").click(function () {
+            //询问
+            var id = $(this).attr("data-id");
+            layer.confirm('', {
+                title: "确定从购物车删除该物品吗？",
+                btn: ['删除', '取消'], //按钮
+                shade: false //不显示遮罩
+            }, function () {
+                location.href = "flow.php?step=drop_goods&id=" + id;
+                //return true;
+            }, function () {
+                //layer.msg('奇葩么么哒', {shift: 1});
+                //return false;
+            });
+        });
+
+        $(function () {
+            $(".nums").blur(function () {
+                var num = $(this).val();
+                if (isNaN(num)) {
+                    $(this).val(1);
+                    layer.msg('请输入合数的数字', {shift: 1});
+                    return;
+                }
+                $(".bnt_blue_1").trigger("click");
+            });
+
+        });
+
+        $('.jifen').toggle(
+            function () {
+                $(this).addClass("r_checked2");
+                $('.jifen_div').show();
+            },
+            function () {
+                $(this).removeClass("r_checked2");
+                $('.jifen_div').hide();
+            }
+        );
+        $(".shrf").click(function () {
+            var text = $("input[name=payment]:checked").parent().text();
+            $(".pay").hide();
+
+            $(".select_pay").text(text);
+            $(".change_p").show();
+            $(this).hide();
+        });
+
+        $(".change_p").click(function () {
+            $(".pay").show();
+            $(this).hide();
+            $(".shrf").show();
+        });
+        $(".a_check_all").click(function () {
+            if ($("input[name=ckeck_all]").is(":checked")) {
+                $("input[name=ids]").removeAttr("checked");
+                $("input[name=ckeck_all]").removeAttr("checked");
+            } else {
+                $("input[name=ids]").attr("checked", true);
+                $("input[name=ckeck_all]").attr("checked", true);
+            }
+        });
+
+        $(".del_ids").click(function () {
+            var str = '';
+            $("input[name=ids]").each(function () {
+                if ($(this).is(":checked") == true) {
+                    str += str ? "," + $(this).val() : $(this).val();
+                }
+
+            })
+            if (!str) {
+                layer.msg('请选择要删除的物品~~~', {time: 1500});
+            }
+            layer.confirm('', {
+                title: "确定从购物车删除该物品吗？",
+                btn: ['删除', '取消'], //按钮
+                shade: false //不显示遮罩
+            }, function () {
+                $.post("flow.php", {step: 'del_drop_goods', str: str}, function (data) {
+                    if (data.status != 1) {
+                        layer.msg('网络错误~~~', {time: 1500});
+                        return false;
+                    }
+                    //layer.msg('更新成功', {icon: 1});
+                    location.reload();
+                }, 'json')
+            }, function () {
+                //layer.msg('奇葩么么哒', {shift: 1});
+                //return false;
+            });
+        });
+        //$.get("flow.php",{as:12},function (){alert(123)},'json');
+    </script>
+
+{% endblock body %}

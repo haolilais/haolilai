@@ -1,0 +1,34 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+{% block title %}
+    <title>零食糕点</title>
+{% endblock %}
+
+{% block body %}
+
+    <div class="sorad_list">
+		<ul>
+		{% for product in products %}
+
+							<li style="width:320px;margin-right:10px;;">
+					<div class="zstu">
+						<a href="{% url 'app:detailed' product.pid %}" onfocus="this.blur()" target="_blank">
+							<img src="http://www.holiland.com/images/201901/goods_img/987_G_1548826381246.jpg" align="absmiddle" border="0">
+						</a>
+					</div>
+					<div class="xx">
+						<a href="{% url 'app:detailed' product.pid %}" onfocus="this.blur()" target="_blank">
+							<p>{{ product.title }}</p>
+								<label style="height:15px;">不支持7天无理由</label>
+							<b>￥{{ product.price }}</b>
+						</a>
+					</div>
+				</li>
+				{% endfor %}
+						<li id="loading" style="width: 100%; text-align: center;"></li>
+		</ul>
+	</div>
+
+{% endblock %}
