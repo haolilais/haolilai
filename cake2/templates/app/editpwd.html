@@ -95,7 +95,8 @@ $(document).ready(function(){
 				<h3 class="meb_bt">修改密码</h3>
 			</div>
 		</div>
-		<form name="fguserForm" method="post" action="http://www.holiland.com/misc.php" class="ajaxForm">
+		<form name="fguserForm" method="post" action="{% url 'app:editpwd' %}" class="ajaxForm">
+            {% csrf_token %}
 			<input name="act" type="hidden" value="act_edit_password" />
 			<div class="meb_bjxx">
 				<!-- <ul>
@@ -150,7 +151,9 @@ $(document).ready(function(){
 				<ul>
 					<li class="text_right"></li>
 					<li>
-						<span class="tj submitbtn" data-ismsg="1" onclick="javascript:;">提交</span></li>
+{#						<span class="tj submitbtn" data-ismsg="1" onclick="javascript:;">提交</span>#}
+                        <button type="submit">提交</button>
+                    </li>
 				</ul>
 			</div>
 			<script>
