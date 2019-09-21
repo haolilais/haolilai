@@ -64,7 +64,7 @@ class Order(models.Model):
     num = models.IntegerField(blank=True, null=True)
     isdel = models.SmallIntegerField(blank=True, null=True,default=0)
     iscart = models.SmallIntegerField(blank=True, null=True,default=0)
-    status = models.SmallIntegerField(blank=True, null=True)
+    status = models.SmallIntegerField(blank=True, null=True, default=0)
     mark = models.TextField(blank=True, null=True)
     uid = models.ForeignKey('User', models.CASCADE, db_column='uid', blank=True, null=True)
 
@@ -199,6 +199,7 @@ class Collections(models.Model):
     isdel = models.SmallIntegerField(blank=True, null=True,default=0)
     iscart = models.SmallIntegerField(blank=True, null=True,default=0)
     create_time = models.DateTimeField(blank=True, null=True)
+
 
 
     class Meta:

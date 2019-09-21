@@ -165,8 +165,17 @@ $(document).ready(function(){
 					<td ><b>{{ order.ordernumber }}</b></td>
                     <td ><b>{{ order.total_price }}</b></td>
                     <td ><b>{{ order.create_time }}</b></td>
-                    <td ><b>{{ order.status }}</b></td>
-                    <td ><b><input type="submit" name="del"  value="删除" id=""></b></td>
+                        {% if order.status == 1 %}
+                    <td ><b>已支付</b></td>
+                            {% else %}
+                            <td ><b>未支付</b></td>
+                        {% endif %}
+
+                    <td ><b><input type="submit" name="del"  value="删除" id="">
+                    {% if order.status == 0 %}
+                        <br> <input type="submit" name="pay" value="去支付">
+                    {% endif %}
+                    </b></td>
                         {#                    <td colspan="7" style="color:#626262;padding-bottom:18px;"><b>无</b></td>#}
                     </form>
                     </tr>
