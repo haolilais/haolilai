@@ -103,6 +103,7 @@ class Products(models.Model):
     pscore = models.IntegerField(default=100,null=True,blank=True)
     status = models.IntegerField(blank=True, null=True)
     hits = models.IntegerField(blank=True, null=True)
+    num = models.IntegerField(blank=True, null=True)
     istop = models.IntegerField(blank=True, null=True)
     iscart = models.IntegerField(blank=True, null=True,default=0)#加入购物车
     ishot = models.IntegerField(blank=True, null=True,default=0)
@@ -125,6 +126,8 @@ class Addressdetail(models.Model):
     rid = models.AutoField(primary_key=True)
     receivename = models.CharField(max_length=100,blank=True, null=True)
     content = models.CharField(max_length=1000, blank=True, null=True)
+    isdefault = models.IntegerField(blank=True, null=True, default=0)
+    phone = models.CharField(max_length=20, blank=True, null=True, default=0)
     receivetime = models.DateTimeField(blank=True, null=True)
     isdel = models.SmallIntegerField(blank=True, null=True,default=0)
     iscontribute = models.SmallIntegerField(blank=True, null=True,default=0)#是否配送

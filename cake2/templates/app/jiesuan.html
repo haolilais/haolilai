@@ -29,6 +29,14 @@
 
     <script type="text/javascript" src="/static/js/shopping_flow.js"></script>
     <script type="text/javascript" src="/static/js/region_flow.js"></script>
+{#    <script>#}
+{#    $(".tijiao").onclick(function () {#}
+{#        var url = "{% url "app:jiesuan" %}"#}
+{#        console.log(url)#}
+{#        $.post("{% url "app:jiesuan" %}", $(".theForm").serialize())#}
+{##}
+{#    })#}
+{#    </script>#}
 {% endblock %}
 
 
@@ -47,7 +55,8 @@
 {#        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=22oqIhnUll0Inar4Tw7nCO8pX0RdAgmI"></script>#}
         <script type="text/javascript" src="/static/js/GeoUtils.js"></script>
 
-        <form action="" method="post" name="theForm" id="theForm" onsubmit="return checkOrderForm(this)">
+        <form action="{% url 'app:jiesuan' %}" method="post" name="theForm" id="theForm" -onsubmit="return checkOrderForm(this)">
+            {% csrf_token %}
             <script type="text/javascript">
                 var flow_no_payment = "您必须选定一个支付方式。";
                 var flow_no_shipping = "您必须选定一个配送方式。";
@@ -243,7 +252,10 @@
                                               maxlength="100" onblur="setMessage(this)"></textarea>
 {#                                    <a href="{% url 'app:order' %}"><input type="submit" value="提交"  class="submit"></a>#}
 {#                                    <span onclick="javascript:submitForm_done();" class="tijiao">确认并提交订单</span>#}
-                                    <div class="submit_order"><a href="{% url 'app:order' %}">提交</a></div>
+                                    <div class="submit_order">
+{#                                        <a href="" id="tijiao">提交</a>#}
+                                        <input type="submit" value="提交">
+                                    </div>
                                 </div>
 
                                 <script type="text/javascript">

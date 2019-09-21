@@ -147,12 +147,34 @@ def jiesuan(request):
     # 订单产品总积分
     pscores = 0
     for i in carts:
+        print("++++++++======")
+        print(carts)
+        print(i.pid)
         nums += i.total_price
         pscores += i.pid.pscore
     print(pscores)
+    # carts = Cart.objects.filter(uid=user).filter(isdel=0)
 
+    # 生成订单
+    if request.method == 'POST':
+        print("+++++++++++++++++++++++")
 
-
+        for cart in carts:
+            order = Order()
+            order.name = cart.name
+            # order.ordernumber = str(time.strftime("%b%d%Y%H%M%S",datetime.now()))+ str(random.randint(0,100))
+            # order.ordernumber = datetime.now().strftime("%Y%m%d%H%M%S")
+            order.ordernumber = str(2019) + str(random.randint(0, 100))
+            # print(datetime.now().strftime("%Y%m%d%H%M%S"))
+            order.money = cart.total_price
+            order.create_time = datetime.now()
+            print(datetime.date)
+            order.paytype = request.POST.get('payment')
+            print('-----------------', order.paytype)
+            order.num = cart.num
+            order.mark = request.POST.get('note')
+            order.uid = user
+            order.save()
 
     return render(request,'app/jiesuan.html',locals())
 
@@ -271,27 +293,27 @@ def user(request):
 # 订单列表
 def order(request):
     user = request.user
-    carts = Cart.objects.filter(uid=user).filter(isdel=0)
-
-    print('-------==========-------')
-    # 生成订单
-    # if request.method == 'POST':
-    order = Order()
-    for cart in carts:
-        order.name = cart.name
-        # order.ordernumber = str(time.strftime("%b%d%Y%H%M%S",datetime.now()))+ str(random.randint(0,100))
-        # order.ordernumber = datetime.now().strftime("%Y%m%d%H%M%S")
-        order.ordernumber = str(2019) + str(random.randint(0,100))
-        # print(datetime.now().strftime("%Y%m%d%H%M%S"))
-        order.money = cart.total_price
-        order.create_time = datetime.now()
-        print(datetime.date)
-        order.paytype = request.POST.get('payment')
-        print('-----------------', order.paytype)
-        order.num = cart.num
-        order.mark = request.POST.get('note')
-        order.uid = user
-        order.save()
+    # carts = Cart.objects.filter(uid=user).filter(isdel=0)
+    #
+    # print('-------==========-------')
+    # # 生成订单
+    # # if request.method == 'POST':
+    # order = Order()
+    # for cart in carts:
+    #     order.name = cart.name
+    #     # order.ordernumber = str(time.strftime("%b%d%Y%H%M%S",datetime.now()))+ str(random.randint(0,100))
+    #     # order.ordernumber = datetime.now().strftime("%Y%m%d%H%M%S")
+    #     order.ordernumber = str(2019) + str(random.randint(0,100))
+    #     # print(datetime.now().strftime("%Y%m%d%H%M%S"))
+    #     order.money = cart.total_price
+    #     order.create_time = datetime.now()
+    #     print(datetime.date)
+    #     order.paytype = request.POST.get('payment')
+    #     print('-----------------', order.paytype)
+    #     order.num = cart.num
+    #     order.mark = request.POST.get('note')
+    #     order.uid = user
+    #     order.save()
 
 
     orders = Order.objects.all()
