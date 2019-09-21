@@ -42,5 +42,6 @@ urlpatterns = [
     url(r'^changem/$', views.changem, name='changem'),
     url(r'^editpwd/$', views.editpwd, name='editpwd'),
     url(r'^profile/$', views.profile, name='profile'),
+    url(r'^paysucceed/$', views.paysucceed, name='paysucceed'),
 
 ]

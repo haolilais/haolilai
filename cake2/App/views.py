@@ -1,6 +1,7 @@
 
 import random
 from datetime import datetime
+import time
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.urls import reverse
 
+from App.alipay import ali
 from App.forms import RegisterForm
 from App.models import *
 from cake.settings import SECRET_KEY
@@ -167,6 +169,7 @@ def jiesuan(request):
             order.ordernumber = str(2019) + str(random.randint(0, 100))
             # print(datetime.now().strftime("%Y%m%d%H%M%S"))
             order.money = cart.total_price
+            order.total_price = cart.total_price
             order.create_time = datetime.now()
             print(datetime.date)
             order.paytype = request.POST.get('payment')
@@ -175,10 +178,9 @@ def jiesuan(request):
             order.mark = request.POST.get('note')
             order.uid = user
             order.save()
-
+            cart.delete()
+        return redirect(reverse("app:order"))
     return render(request,'app/jiesuan.html',locals())
-
-
 
 
 
@@ -320,18 +322,67 @@ def order(request):
     if request.method == 'POST':
         if request.POST.get("chaxun") == "查询":
             key = request.POST.get("orderkey")
-            print("--------------------------")
-            print(key)
-        print("xxxxxxxxxxxxxxxxxxxxx")
         if request.POST.get('del') == '删除':
             oid = request.POST.get('oid')
             order1 = Order.objects.get(pk=oid)
             order1.delete()
             return redirect(reverse("app:order"))
-
-
-
+        if request.POST.get("pay") == "去支付":
+            oid = request.POST.get("oid")
+            order = Order.objects.get(pk=oid)
+            alipay = ali()
+            # 生成支付的url
+            query_params = alipay.direct_pay(
+                subject=order.name,  # 商品简单描述
+                out_trade_no=order.ordernumber,  # 商户订单号
+                total_amount=order.total_price,  # 交易金额(单位: 元 保留俩位小数)
+            )
+            # 支付宝网关,带上订单参数才有意义
+            pay_url = "https://openapi.alipaydev.com/gateway.do?{}".format(query_params)
+            # POST请求重定向到支付宝提供的网关，跳转到支付宝支付界面
+            return redirect(pay_url)
     return render(request, 'app/order.html',locals())
+
+
+def paysucceed(request):
+    alipay = ali()
+
+    if request.method == "POST":
+
+        # 检测是否支付成功
+        # 去请求体中获取所有返回的数据：状态/订单号
+        from urllib.parse import parse_qs
+        body_str = request.body.decode('utf-8')
+        post_data = parse_qs(body_str)
+
+        post_dict = {}
+        for k, v in post_data.items():
+            post_dict[k] = v[0]
+        print(post_dict)
+
+        sign = post_dict.pop('sign', None)
+        status = alipay.verify(post_dict, sign)
+
+        if status:
+            oid = request.POST.get("oid")
+            order = Order.objects.get(pk=oid)
+            order.status = 1
+            order.save()
+        return HttpResponse('POST返回')
+
+    else:
+        params = request.GET.dict()
+        sign = params.pop('sign', None)
+        status = alipay.verify(params, sign)
+        if status:
+            # 获取订单状态，显示给用户
+            ordernum = request.GET.get("out_trade_no")
+            order = Order.objects.get(ordernumber=ordernum)
+            order.status = 1
+            order.save()
+            return redirect(reverse("app:index"))
+
+
 
 # 我的收藏夹
 def favorite(request):
