@@ -5,6 +5,7 @@ import time
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -261,7 +262,7 @@ def user_login(request):
         if request.POST.get('loginsubmit'):
             username = request.POST.get('username')
             password = request.POST.get('password')
-            autologin = request.POST.get('cookietime')
+            # autologin = request.POST.get('cookietime')
             # print(username)
             # print(password)
 
@@ -435,6 +436,7 @@ def favorite(request):
             uid = request.user.pk
             user = User.objects.get(pk=uid)
             cart.uid = user
+            # cart.pid = shou1.products_set.pid
             cart.save()
             return redirect(reverse('app:favorite'))
     return render(request, 'app/favorite.html',locals())
@@ -495,14 +497,36 @@ def message(request):
 def changem(request):
     return render(request, 'app/changem.html')
 
+
 # 修改密码
+@login_required(login_url='/login/')
 def editpwd(request):
-    # 用户id
-    uid = Token(SECRET_KEY).confirm_validate_token(request.GET.get('token'))
-    # print(res)
-    # password = request.GET.get('password')
-    # print('uid:',res,"password:",password)
+    user = request.user
+    if request.method == 'POST':
+        oldpassworld = request.POST.get('old_password')
+
+        passworld = user.password  # 数据库的passworld
+        check = check_password(oldpassworld, passworld)
+        if check:
+            newpswd1 = request.POST.get('new_password')
+            print(newpswd1)
+            print(type(newpswd1))
+            newpswd2 = request.POST.get('confirm_password')
+            email = request.POST.get('emailnew')
+            if newpswd1 == newpswd2 and newpswd1 != '':
+                user.set_password(newpswd1)
+                user.save()
+                return render(request, 'app/login.html')
+            elif newpswd1 == '':
+                return render(request, 'app/login.html')
+
+    # print(user)
+    # print(type(user))
+
     return render(request, 'app/editpwd.html',locals())
+
+
+
 
 
 

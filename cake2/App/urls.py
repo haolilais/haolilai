@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^we/$', views.we, name='we'),
 
     # url(r'^base/$',views.base,name='base'),
-    url(r'^detailed/$',views.detailed,name='detailed'),
+    # url(r'^detailed/$',views.detailed,name='detailed'),
     url(r'^detailed/(\d+)/$',views.detailed,name='detailed'),
     url(r'^cart/$',views.cart,name='cart'),
     url(r'^jiesuan/$',views.jiesuan,name='jiesuan'),
