@@ -18,11 +18,11 @@
     <SCRIPT language=JavaScript src="/static/js/utils.js"></SCRIPT>
     <SCRIPT language=JavaScript src="/static/js/common.js"></SCRIPT>
     <SCRIPT type='text/javascript' src="/static/js/cloud-zoom.1.0.2.js"></SCRIPT>
+
 {% endblock %}
 
 
 {% block body %}
-
     <SCRIPT>
         var goodsId="1144";
         function submitProductForm(act, isSearch){
@@ -178,7 +178,8 @@
 					</DD>
 				</DL>
 				<DIV class="h_ss h_goumai">
-					<A href="javascript:addToCart(1144,0,1);" style="padding-left:0px; text-align:center;">立即购买</A>
+                    <input type="submit" style="width: 250px; height: 50px;background-color:yellow ;-text-align:center;" name="buy" value="立即购买">
+{#					<a  id="buy1" style="padding-left:0px; text-align:center;">立即购买</a>#}
 				</DIV>
             </DIV>
 {#		</DIV>#}

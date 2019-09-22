@@ -67,6 +67,7 @@ def we(request):#关于我们
 def detailed(request,pid):
     product = Products.objects.get(pk=pid)
     c = request.GET.get('c')
+    user = request.user
     # if request.method == 'GET':
     #     c=request.GET.get('c')
     #     print(c)
@@ -77,7 +78,7 @@ def detailed(request,pid):
         # # post.delete()
         # product.save()
 
-        user = request.user
+
         # users = User.objects.get(pk=user.uid)
         carts = Cart.objects.filter(isdel=0).filter(uid=user).filter(name=product.title).first()
         print(carts,'+++++++++++++++')
@@ -104,6 +105,33 @@ def detailed(request,pid):
             cart.save()
 
             print('333333333333')
+        if request.POST.get("buy") == "立即购买":
+
+            num = request.POST.get("number")
+            ordernumber = str(2019) + str(random.randint(0, 100))
+            money = int(num) * int(product.price)
+            alipay = ali()
+            # 生成支付的url
+            query_params = alipay.direct_pay(
+                subject=product.title,  # 商品简单描述
+                out_trade_no=ordernumber,  # 商户订单号
+                total_amount=money,  # 交易金额(单位: 元 保留俩位小数)
+            )
+            # 支付宝网关,带上订单参数才有意义
+            pay_url = "https://openapi.alipaydev.com/gateway.do?{}".format(query_params)
+            # POST请求重定向到支付宝提供的网关，跳转到支付宝支付界面
+            order = Order()
+            order.name = product.title
+            order.ordernumber = ordernumber
+            order.money = product.price
+            order.total_price = money
+            order.create_time = datetime.now()
+            order.paytype = request.POST.get('payment')
+            order.num = num
+            order.mark = 1
+            order.uid = user
+            order.save()
+            return redirect(pay_url)
         return redirect(reverse('app:detailed',args=[pid]))
 
     return render(request,'app/detailed.html',locals())
@@ -342,6 +370,7 @@ def order(request):
             # 支付宝网关,带上订单参数才有意义
             pay_url = "https://openapi.alipaydev.com/gateway.do?{}".format(query_params)
             # POST请求重定向到支付宝提供的网关，跳转到支付宝支付界面
+
             return redirect(pay_url)
     return render(request, 'app/order.html',locals())
 
