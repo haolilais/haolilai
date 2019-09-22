@@ -207,6 +207,18 @@ def jiesuan(request):
             order.num = cart.num
             order.mark = request.POST.get('note')
             order.uid = user
+
+            # 收货地址
+            order.province = request.POST.get('province')
+            order.receive_name = request.POST.get('receive_name')
+            order.shi = request.POST.get('shi')
+            order.qu = request.POST.get('qu')
+
+            # orders = Order.objects.first()
+            # print(orders.)
+            print('--------++++++--------------',request.POST.get('receive_name'),request.POST.get('province'),request.POST.get('shi'),request.POST.get('qu'))
+
+
             order.save()
             cart.delete()
         return redirect(reverse("app:order"))

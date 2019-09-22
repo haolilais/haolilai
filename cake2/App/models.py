@@ -66,6 +66,11 @@ class Order(models.Model):
     iscart = models.SmallIntegerField(blank=True, null=True,default=0)
     status = models.SmallIntegerField(blank=True, null=True, default=0)
     mark = models.TextField(blank=True, null=True)
+    receive_name = models.CharField(max_length=100, null=True)
+    province = models.CharField(max_length=100, null=True)
+    shi = models.CharField(max_length=100, null=True)
+    qu = models.CharField(max_length=100, null=True)
+
     uid = models.ForeignKey('User', models.CASCADE, db_column='uid', blank=True, null=True)
 
 
