@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block css %}
-    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/global.css">
-    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/channel.css">
-    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/cart.css">
-    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/ui.all.css">
-    <link rel=stylesheet type=text/css href="http://www.holiland.com/statics/css/channel_new.css">
+    <link rel=stylesheet type=text/css href="/static/css/global.css">
+    <link rel=stylesheet type=text/css href="/static/css/channel.css">
+    <link rel=stylesheet type=text/css href="/static/css/cart.css">
+    <link rel=stylesheet type=text/css href="/static/css/ui.all.css">
+    <link rel=stylesheet type=text/css href="/static/css/channel_new.css">
 {% endblock %}
 
 <script>
@@ -263,8 +263,8 @@
                             <td bgcolor="#ffffff" align="center">
                                 <dl style="margin-left:-10px;">
                                     <dd><input type="checkbox" style="margin-top:100%" value="1564954" name="ids" checked="checked"></dd>
-                                    <dt><a href="detailed.php?id=1144">
-                                        <img src="images/201907/thumb_img/1144_thumb_G_1562475751449.jpg" width=60
+                                    <dt><a href="{% url 'app:detailed' cart.pid.pid %}">
+                                        <img src="/static/imgaes/afficheimg/1556050944618701139.jpg" width=60
                                              align='absMiddle' height=60></a>&nbsp;&nbsp;
                                     </dt>
                                     <dd style="line-height:60px;">
@@ -277,7 +277,11 @@
                                     </dd>
                                 </dl>
                             </td>
-                            <td style="padding-left:20px;">{{ cart.arrt }}</td>
+                            {% if cart.arrt == '1' %}
+                            <td style="padding-left:20px;">12寸</td>
+                            {% else %}
+                            <td style="padding-left:20px;">6寸</td>
+                            {% endif %}
                             <td style="padding-left:20px;" bgcolor="#ffffff">{{ cart.pid.pscore }}</td>
                             <td style="padding-left:20px;" bgcolor="#ffffff">￥{{ cart.unit_price }}<br/></td>
                             <td style="padding-left:20px;" bgcolor="#ffffff">

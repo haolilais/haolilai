@@ -97,3 +97,8 @@ class RegisterForm(forms.Form):
     #     if res:
     #         raise ValidationError("已经注册过了噢")
     #     return self.cleaned_data.get('phonenumber')
+
+class phoneForm(forms.Form):
+    yzm = forms.CharField(label='验证码', error_messages={
+        'required': '验证码必须输入'
+    })

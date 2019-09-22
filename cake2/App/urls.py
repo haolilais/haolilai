@@ -39,7 +39,10 @@ urlpatterns = [
     url(r'^integral/$', views.integral, name='integral'),
     url(r'^bonus/$', views.bonus, name='bonus'),
     url(r'^message/$', views.message, name='message'),
+
     url(r'^changem/$', views.changem, name='changem'),
+    url(r'^phone_num/$', views.phone_num, name='phone_num'),
+
     url(r'^editpwd/$', views.editpwd, name='editpwd'),
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^paysucceed/$', views.paysucceed, name='paysucceed'),

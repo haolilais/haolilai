@@ -2,10 +2,10 @@
 {% block css %}
     <link href="http://www.holiland.com/statics/css/global.css" rel="stylesheet" type="text/css">
 <link href="http://www.holiland.com/statics/css/member.css" rel="stylesheet" rev="stylesheet" type="text/css" media="all">
-<script language="JavaScript" src="http://www.holiland.com/statics/js/jquery.min.js"></script>
-<script src="http://www.holiland.com/statics/js/layer/layer.js" ></script>
-<script src="http://www.holiland.com/statics/js/ajaxForm.js" ></script>
-<script src="http://www.holiland.com/statics/js/common.js" ></script>
+<script language="JavaScript" src="/static/js/jquery.min.js"></script>
+<script src="/static/js/layer/layer.js" ></script>
+<script src="/static/js/ajaxForm.js" ></script>
+<script src="/static/js/common.js" ></script>
 <style type="text/css">
 .paysubmit{float:left; margin-left:10px;cursor: pointer; border:none; display: block;height: 40px;line-height: 40px;text-align: center;width: 100px;background: none repeat scroll 0% 0% #87D0E3;font-size: 16px; color:#fff;}
 #syl_but{
@@ -35,13 +35,13 @@
 		<ul>
 			<li><a href="{% url 'app:order' %} ">查看订单</a></li>
 			<li><a href="{% url 'app:favorite' %} ">收藏夹</a></li>
-			<li><a href="{% url 'app:friend' %} ">我的亲友</a></li>
+{#			<li><a href="{% url 'app:friend' %} ">我的亲友</a></li>#}
 			<li><a href="{% url 'app:address' %} ">收货地址簿</a></li>
-			<li><a href="{% url 'app:integral' %} ">我的积分</a></li>
-			<li><a href="{% url 'app:bonus' %} ">我的优惠券</a></li>
+{#			<li><a href="{% url 'app:integral' %} ">我的积分</a></li>#}
+{#			<li><a href="{% url 'app:bonus' %} ">我的优惠券</a></li>#}
 			<!-- <li><a href="user.php?act=exchange">兑换优惠券</a></li> -->
 			<!-- <li><a href="user.php?act=return">退换货申请</a></li> -->
-			<li><a href="{% url 'app:message' %} ">投诉和建议</a></li>
+{#			<li><a href="{% url 'app:message' %} ">投诉和建议</a></li>#}
 		</ul>
 	</div>
 	<div class="help_menu">

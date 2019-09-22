@@ -1,184 +1,318 @@
-
 {% extends 'app/base.html' %}
 {% block css %}
     <link href="http://www.holiland.com/statics/css/global.css" rel="stylesheet" type="text/css">
-<link href="http://www.holiland.com/statics/css/member.css" rel="stylesheet" rev="stylesheet" type="text/css" media="all">
-<script language="JavaScript" src="http://www.holiland.com/statics/js/jquery.min.js"></script>
-<script src="http://www.holiland.com/statics/js/layer/layer.js" ></script>
-<script src="http://www.holiland.com/statics/js/ajaxForm.js" ></script>
-<script src="http://www.holiland.com/statics/js/common.js" ></script>
-<style type="text/css">
-.paysubmit{float:left; margin-left:10px;cursor: pointer; border:none; display: block;height: 40px;line-height: 40px;text-align: center;width: 100px;background: none repeat scroll 0% 0% #87D0E3;font-size: 16px; color:#fff;}
-#syl_but{
-  float: left;
-  margin-left: 10px;
-  cursor: pointer;
-  border: none;
-  display: block;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  width: 100px;
-  background: none repeat scroll 0% 0% #87D0E3;
-  font-size: 16px;
-  color: #fff;
-}
-</style>
-</head>
+    <link href="http://www.holiland.com/statics/css/member.css" rel="stylesheet" rev="stylesheet" type="text/css"
+          media="all">
+    <script language="JavaScript" src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/layer/layer.js"></script>
+    <script src="/static/js/ajaxForm.js"></script>
+    <script src="/static/js/common.js"></script>
+    <style type="text/css">
+        .paysubmit {
+            float: left;
+            margin-left: 10px;
+            cursor: pointer;
+            border: none;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            width: 100px;
+            background: none repeat scroll 0% 0% #87D0E3;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        #syl_but {
+            float: left;
+            margin-left: 10px;
+            cursor: pointer;
+            border: none;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            width: 100px;
+            background: none repeat scroll 0% 0% #87D0E3;
+            font-size: 16px;
+            color: #fff;
+        }
+    </style>
+    </head>
 
 {% endblock %}
 
 {% block body %}
     <div class="hll_meb">
 
-		<div class="hll_meb_l">
-	<div class="help_menu">
-		<div class="tit"><span></span><h3>业务功能</h3></div>
-		<ul>
-			<li><a href="{% url 'app:order' %} ">查看订单</a></li>
-			<li><a href="{% url 'app:favorite' %} ">收藏夹</a></li>
-			<li><a href="{% url 'app:friend' %} ">我的亲友</a></li>
-			<li><a href="{% url 'app:address' %} ">收货地址簿</a></li>
-			<li><a href="{% url 'app:integral' %} ">我的积分</a></li>
-			<li><a href="{% url 'app:bonus' %} ">我的优惠券</a></li>
-			<!-- <li><a href="user.php?act=exchange">兑换优惠券</a></li> -->
-			<!-- <li><a href="user.php?act=return">退换货申请</a></li> -->
-			<li><a href="{% url 'app:message' %} ">投诉和建议</a></li>
-		</ul>
-	</div>
-	<div class="help_menu">
-		<div class="tit"><span></span><h3>个人信息</h3></div>
-		<ul>
-			<li><a href="{% url 'app:changem' %} ">更换手机号</a></li>
-			<li><a href="{% url 'app:editpwd' %} ">修改密码</a></li>
-			<li><a href="{% url 'app:editpwd' %} ">编辑用户信息</a></li>
-		</ul>
-	</div>
-	<div class="help_menu">
-		<div class="tit"><span></span><h3>其他功能</h3></div>
-		<ul>
-			<li><a href="{% url 'app:index' %}" class="opAjax" data-confirm="0" data-ismsg="1">退出</a></li>
-			<li><a href="{% url 'app:user' %}">返回帐户首页</a></li>
-		</ul>
-	</div>
-</div>
-<script type="text/javascript">
-$(document).ready(function(){
-	var objStr = ".help_menu div.tit span";
-	$(objStr).each(function(i){
-		$(this).click(function(){
-			$($(".help_menu div.tit")[i]).next("ul").slideToggle(20);
-			$(this).toggleClass("cur");
-			$(this).siblings("span").removeClass("cur");
-		});
-	});
+        <div class="hll_meb_l">
+            <div class="help_menu">
+                <div class="tit"><span></span>
+                    <h3>业务功能</h3></div>
+                <ul>
+                    <li><a href="{% url 'app:order' %} ">查看订单</a></li>
+                    <li><a href="{% url 'app:favorite' %} ">收藏夹</a></li>
+                    {#			<li><a href="{% url 'app:friend' %} ">我的亲友</a></li>#}
+                    <li><a href="{% url 'app:address' %} ">收货地址簿</a></li>
+                    {#			<li><a href="{% url 'app:integral' %} ">我的积分</a></li>#}
+                    {#			<li><a href="{% url 'app:bonus' %} ">我的优惠券</a></li>#}
+                    <!-- <li><a href="user.php?act=exchange">兑换优惠券</a></li> -->
+                    <!-- <li><a href="user.php?act=return">退换货申请</a></li> -->
+                    {#			<li><a href="{% url 'app:message' %} ">投诉和建议</a></li>#}
+                </ul>
+            </div>
+            <div class="help_menu">
+                <div class="tit"><span></span>
+                    <h3>个人信息</h3></div>
+                <ul>
+                    <li><a href="{% url 'app:changem' %} ">更换手机号</a></li>
+                    <li><a href="{% url 'app:editpwd' %} ">修改密码</a></li>
+                    <li><a href="{% url 'app:editpwd' %} ">编辑用户信息</a></li>
+                </ul>
+            </div>
+            <div class="help_menu">
+                <div class="tit"><span></span>
+                    <h3>其他功能</h3></div>
+                <ul>
+                    <li><a href="{% url 'app:index' %}" class="opAjax" data-confirm="0" data-ismsg="1">退出</a></li>
+                    <li><a href="{% url 'app:user' %}">返回帐户首页</a></li>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var objStr = ".help_menu div.tit span";
+                $(objStr).each(function (i) {
+                    $(this).click(function () {
+                        $($(".help_menu div.tit")[i]).next("ul").slideToggle(20);
+                        $(this).toggleClass("cur");
+                        $(this).siblings("span").removeClass("cur");
+                    });
+                });
 
-	$(".help_menu ul li").mouseover(function () {
-		$(this).addClass('Bg_hover');
-	});
-	$(".help_menu ul li").mouseout(function () {
-		$(this).removeClass('Bg_hover');
-	});
-});
-</script>
+                $(".help_menu ul li").mouseover(function () {
+                    $(this).addClass('Bg_hover');
+                });
+                $(".help_menu ul li").mouseout(function () {
+                    $(this).removeClass('Bg_hover');
+                });
+            });
+        </script>
 
-	<div class="hll_meb_r">
+        <div class="hll_meb_r">
 
-					<div class="hll_memDD">
-			<div class="tit">
-				<h3 class="meb_bt" style="float:left;">更换手机号</h3>
-			</div>
-		</div>
-		<form name="fguserForm" method="post" action="http://www.holiland.com/user.php" id="theform">
-			<input name="act" type="hidden" value="changem" />
-			<input name="is_submit" type="hidden" value="1" />
-			<div class="meb_bjxx">
-				<ul class="hg">
-					<li class="text_right" style="margin-bottom:10px">原始手机号：</li>
-					<li style="margin-bottom:10px">
-						<div class="xx">
-							<input name="old_phone" class="bg" value="13148636172" type="text">
-							<br/><a href="profile.html">若无原始号，点击到编辑用户信息绑定手机号</a>
-						</div>
-						<span class="ts"></span>
-					</li>
-				</ul>
-				<ul class="hg">
-					<li class="text_right">更换手机号：</li>
-					<li>
-						<div class="xx"><input name="new_phone"  class="bg" type="text"></div>
-						<span class="ts" id="userpwd"></span>
-					</li>
-				</ul>
-				<ul class="hg">
-					<li class="text_right">图文验证码：</li>
-					<li>
-						<div class="xx">
-							<input name="captcha" maxlength="4" class="bg reg_captcha" autocomplete="off" type="text" style="width:150px;">
-							<img src="/captcha.php?width=50&height:20&" alt="captcha" style="vertical-align: middle;cursor: pointer;width: 112px;height: 30px; margin-left:13px;" onClick="this.src='/captcha.php?width=50&height:20&'+Math.random()" />
-						</div>
-					</li>
-				</ul>
-				<ul class="hg">
-					<li class="text_right">手机验证码：</li>
-					<li>
-						<div class="xx"><input name="vip"  class="bg" type="text" style="width:150px;"><span class="tj get_code" onclick="javascript:;" style="width:125px;height:29px;margin-top:-1px;line-height:30px;" mobile="old_phone">获取短信验证码</span></div>
-					</li>
-				</ul>
-				<ul>
-					<li class="text_right"></li>
-					<li>
-						<input type="button" class="tj sunmit_code" data-ismsg="1" value="提交" style="border:0px;">
-					</li>
-				</ul>
-			</div>
-			<input type="hidden" name="token" value="c73997b997dcc3c57b562c7b1b102c90" />
-			<script>
-			$(document).ready(function(){
-				$(".meb_bjxx ul.hg").mouseover(function () {
-					$(this).find("span.ts").show();
-					//$(this).addClass('hover_bg');
-				});
-				$(".meb_bjxx ul.hg").mouseout(function () {
-					$(this).find("span.ts").hide();
-					//$(this).removeClass('hover_bg');
-				});
-			});
-			</script>
-		</form>
+            <div class="hll_memDD">
+                <div class="tit">
+                    <h3 class="meb_bt" style="float:left;">更换手机号</h3>
+                </div>
+            </div>
 
 
+            <form name="fguserForm" method="post" action="{% url 'app:changem' %}" id="theform">
+                {% csrf_token %}
+                <input name="act" type="hidden" value="changem"/>
+                <input name="is_submit" type="hidden" value="1"/>
+
+
+                <div class="meb_bjxx">
+                    {#                    <ul class="hg">#}
+                    {#                        <li class="text_right" style="margin-bottom:10px">原始手机号：</li>#}
+                    {#                        <li style="margin-bottom:10px">#}
+                    {#                            <div class="xx">#}
+                    {#                                <input name="old_phone" class="bg" value="13148636172" type="text">#}
+                    {#                                <br/><a href="profile.html">若无原始号，点击到编辑用户信息绑定手机号</a>#}
+                    {#                            </div>#}
+                    {#                            <span class="ts"></span>#}
+                    {#                        </li>#}
+                    {#                    </ul>#}
+                    {#                    <ul class="hg">#}
+                    {#                        <li class="text_right">更换手机号：</li>#}
+                    {#                        <li>#}
+                    {#                            <div class="xx"><input name="new_phone" class="bg" type="text"></div>#}
+                    {#                            <span class="ts" id="userpwd"></span>#}
+                    {#                        </li>#}
+                    {#                    </ul>#}
+                    {##}
+                    {##}
+                    {#                    <ul class="hg">#}
+                    {#                        <li class="text_right">手机验证码：</li>#}
+                    {#                        <li>#}
+                    {#                            <div class="xx"><input name="vip" class="bg" type="text" style="width:150px;"><span#}
+                    {#                                    class="tj get_code" onclick="javascript:;"#}
+                    {#                                    style="width:125px;height:29px;margin-top:-1px;line-height:30px;"#}
+                    {#                                    mobile="old_phone">获取短信验证码</span></div>#}
+                    {#                        </li>#}
+                    {#                    </ul>#}
+                    {#                    <ul>#}
+                    {#                        <li class="text_right"></li>#}
+                    {#                        <li>#}
+                    {#                            <input type="button" class="tj sunmit_code" data-ismsg="1" value="提交" style="border:0px;">#}
+                    {#                        </li>#}
+                    {#                    </ul>#}
+
+
+                    <table style="width: 200px;height: 100px;">
+                        <script src="http://code.jquery.com/jquery-latest.js" ;></script>
+                        <tr>
+                            <div class="formWrap">
+                                <div class="fwSpan ui-placeholder-re">
+                                    <td>
+
+                                        <span class="rq">*</span>
+                                        <label class="tit">原始手机号码</label>
+                                        <label for="account">
+                                            <input class="i_text_f" id="phone2" name="phone2" type="text"
+                                                   placeholder="请输入原始手机号" style="width: 300px;height: 30px;">
+                                            <a id="errMsg1" color="red" style="display:none;  "></a>
+                                        </label><br><br>
+                                        <span class="rq">*</span>
+                                        <label class="tit">手机号码</label>
+                                        <label for="account">
+                                            <input class="i_text_f" id="phone" name="phone" type="text"
+                                                   placeholder="请输入手机号" style="width: 300px;height: 30px;">
+                                            <a id="errMsg1" color="red" style="display:none;  "></a>
+                                        </label><br><br>
+                                        <label class="tit">验证码</label>
+                                        <input class="i_text_f" id="rpcode" name="rpcode" type="text"
+                                               placeholder="手机验证码" style="width: 300px;height: 30px;">
+                                        <input id="getCode" type="button" value="获取验证码" onclick="sendMessages()" class="fp-btn"> </input>
+                                        <a id="errMsg2" color="red">{{ form.errors.sjyzm }}</a><br><br>
+
+                                        <button type="submit" name="regsubmit" value="true">提交</button>
+                                    </td>
+                                </div>
+                                <input type="text" id="code" hidden="true">
+                            </div>
+                        </tr>
+
+                        <script>
+                            var InterValObj; //timer变量，控制时间
+                            var count = 60; //间隔函数，1秒执行
+                            var curCount; //当前剩余秒数
+                            var code = ""; //验证码
+                            var codeLength = 6; //验证码长度
+                            function sendMessages() {
+                                curCount = count;
+                                var someway = 1
+                                var phone = $("#phone").val()
+                                if (validatePhone(phone)) {
+                                    return;
+                                }
+                                if (phone != "") {
+                                    //设置button效果，开始计时
+                                    $("#getCode").attr("disabled", "true");
+                                    $("#getCode").val("请在" + curCount + "秒内输入");
+                                    InterValObj = window.setInterval(SetRemainTimes, 1000); //启动计时器，1秒执行一次
+                                    //向后台发送处理数据
+                                    $.ajax({
+                                        url: "http://127.0.0.1:8000/phone_num/",
+                                        {% comment %}
+                                        dataType: "dict",
+                                        {% endcomment %}
+                                        type: "get",
+                                        data: {
+                                            "phonenum": phone,
+                                            "someway": 1
+                                        }
+
+                                    });
+
+                                } else {
+                                    alert("手机号码不能为空！！！！！！");
+                                }
+                            }
+
+                            //timer处理函数
+                            function SetRemainTimes() {
+                                if (curCount == 0) {
+                                    window.clearInterval(InterValObj); //停止计时器
+                                    $("#getCode").removeAttr("disabled"); //启用按钮
+                                    $("#getCode").val("重新发送验证码");
+                                    code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效
+                                } else {
+                                    curCount--;
+                                    $("#getCode").val("请在" + curCount + "秒内输入");
+                                }
+                            }
+
+                            //开始按钮点击事件
+                            $("#start").click(function () {
+                                window.location.href = "regafter.html?phone=" + $("#phone").val();
+                            })
+
+                            //验证手机号
+                            function validatePhone(phone) {
+                                if (phone == '') {
+                                    $("#errMsg1").html("  请先填写手机号");
+                                    $("#errMsg1").show();
+                                    return true;
+                                }
+                                var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+                                if (!myreg.test(phone)) {
+                                    $("#errMsg1").html("  请输入有效的手机号");
+                                    $("#errMsg1").show();
+                                    return true;
+                                }
+                                return false;
+                            }
+
+                            //验证码非空和错误验证
+                            function validateCode() {
+                                var phone = $("#phone").val();
+                                var code = $("#code").val();
+                                var rpcode = $("#rpcode").val();
+                                if (validatePhone(phone)) {
+                                    return true;
+                                }
+                                if (code == '') {
+                                    $("#errMsg2").html("  请先获取验证码");
+                                    $("#errMsg2").show();
+                                    return true;
+                                }
+                                if (rpcode == '' || code != rpcode) {
+                                    $("#errMsg2").html("  请正确输入验证码");
+                                    $("#errMsg2").show();
+                                    return true;
+                                }
+                                alert(code != rpcode);
+                                return false;
+                            }
+
+                            $("#phone").on("focus", function () {
+                                $("#errMsg1").hide();
+                            })
+                            $("#rpcode").on("focus", function () {
+                                $("#errMsg2").hide();
+                            })
+                        </script>
+                    </table>
+
+
+                </div>
+               </form>
+
+                {#                <input type="hidden" name="token" value="c73997b997dcc3c57b562c7b1b102c90"/>#}
+                <script>
+                    $(document).ready(function () {
+                        $(".meb_bjxx ul.hg").mouseover(function () {
+                            $(this).find("span.ts").show();
+                            //$(this).addClass('hover_bg');
+                        });
+                        $(".meb_bjxx ul.hg").mouseout(function () {
+                            $(this).find("span.ts").hide();
+                            //$(this).removeClass('hover_bg');
+                        });
+                    });
+                </script>
 
 
 
 
 
+            <!--#兑换优惠券页面 start>-->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<!--#兑换优惠券页面 start>-->
-
-
-
-
-
-
-
-	</div>
-</div>
+        </div>
+    </div>
 
 {% endblock %}

@@ -13,10 +13,11 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from App.alipay import ali
-from App.forms import RegisterForm
+from App.forms import RegisterForm, phoneForm
 from App.models import *
 from cake.settings import SECRET_KEY
 from tools.mytoken import Token
+from tools.sms import send_sms
 from tools.verifycode import VerifyCode
 
 
@@ -466,7 +467,52 @@ def message(request):
 
 # 更换手机号
 def changem(request):
-    return render(request, 'app/changem.html')
+
+    if request.method == 'POST':
+        # 用POST数据实例化表单，表单对象会验证POST数据
+        form = phoneForm(request.POST)
+
+        # 验证码验证
+        yzm1 = request.POST.get('rpcode')
+        yzm2 = request.session.get('code1')
+        # 判定验证码是否匹配
+        res = (yzm1 == yzm2)
+        # 如果验证码不匹配
+        if not res:
+            form.errors['yzm'] = "验证码不匹配"
+
+        if res and form.is_valid():  # 验证通过
+            form.cleaned_data.pop('yzm')
+            # User.objects.update(**form.cleaned_data)
+            user = request.user
+            user.phonenumber = request.POST.get('phone')
+            print('新手机号',request.POST.get('phone'))
+            user.save()
+            print('------------------------')
+
+            return redirect(reverse('app:changem'))
+        return render(request, 'app/changem.html', {'form': form }, locals())
+    else:
+        form = phoneForm()
+        return render(request, 'app/changem.html', locals())
+
+    # return render(request,'app/changem.html')
+
+#获取手机号验证码
+def phone_num(request,*args, **kwargs):
+    # print
+    data = dict(request.GET)
+    print(data, '看看传的都是什么')
+    phnumber = data['phonenum'][0]
+    print(data, '88888000888888888')
+    print(phnumber, '前台的输入手机号')
+    num = str(random.randint(10000, 1000000))
+    print('------------------------', num)
+    res = send_sms(phnumber, {'number': num})
+    # 写入session
+    request.session['code1'] = num
+    print(res, num, 'num就是验证码')
+    return HttpResponse('ok')
 
 
 # 修改密码
@@ -500,8 +546,6 @@ def editpwd(request):
 
 
 
-
-
 # 编辑用户信息
 def profile(request):
     if request.method == 'POST':
@@ -513,4 +557,5 @@ def profile(request):
         users.userdetail_set.update(birthday=request.POST.get('birthday'))
         users.save()
     return render(request, 'app/profile.html')
+
 
