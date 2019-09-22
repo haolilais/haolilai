@@ -160,7 +160,8 @@ def cart(request):
     print(d,'++++++++++++++++++')
     if d :
         # print('---------->',d)
-        pro = Cart.objects.get(pid=int(d))
+        # pro = Cart.objects.get(pid=int(d))
+        pro = Cart.objects.filter(isdel=0).get(pid=int(d))
         pro.isdel =1
         pro.save()
         return redirect(reverse('app:cart'))
